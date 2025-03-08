@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Semilleros</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="header-image.jpg" alt="Encabezado de Semilleros" class="header-image">
+        <h1>Gestión de Semilleros</h1>
+    </header>
+
+    <div class="container">
+        <label for="selectSemillero">Selecciona un Semillero:</label>
+        <select id="selectSemillero">
+            <option value="INFORMA">INFORMA</option>
+            <option value="COMBA">COMBA</option>
+        </select>
+
+        <div id="infoSemillero"></div>
+
+        <hr>
+
+        <h2>Registro de Docente</h2>
+        <form id="formDocente">
+            <input type="text" id="nombreDocente" placeholder="Nombre del Docente" required>
+            <input type="text" id="formacionDocente" placeholder="Formación Académica" required>
+            <input type="text" id="horarioDocente" placeholder="Horario de Atención" required>
+            <input type="text" id="objetivoDocente" placeholder="Objetivo de Investigación" required>
+            <button type="submit">Guardar Docente</button>
+        </form>
+
+        <hr>
+
+        <h2>Registro de Estudiante</h2>
+        <form id="formEstudiante">
+            <input type="text" id="nombreEstudiante" placeholder="Nombre del Estudiante" required>
+            <input type="text" id="codigoEstudiante" placeholder="Código" required>
+            <input type="text" id="carreraEstudiante" placeholder="Carrera" required>
+            <button type="submit">Agregar Estudiante</button>
+        </form>
+
+        <hr>
+
+        <h2>Registro de Actividad</h2>
+        <form id="formActividad">
+            <input type="text" id="nombreActividad" placeholder="Nombre de la Actividad" required>
+            <input type="date" id="fechaActividad" required>
+            <input type="time" id="horaActividad" required>
+            <input type="number" id="limiteActividad" placeholder="Límite de Asistentes" required>
+            <textarea id="resumenActividad" placeholder="Resumen"></textarea>
+            <button type="submit">Registrar Actividad</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
