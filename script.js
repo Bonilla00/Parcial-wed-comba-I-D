@@ -1,62 +1,52 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const grupoSelect = document.getElementById("grupoSelect");
-    const grupoInfo = document.getElementById("grupoInfo");
-    const grupoNombre = document.getElementById("grupoNombre");
-    const grupoDescripcion = document.getElementById("grupoDescripcion");
-    const grupoDirector = document.getElementById("grupoDirector");
+    const selectSemillero = document.getElementById("selectSemillero");
+    const formDocente = document.getElementById("formDocente");
+    const formEstudiante = document.getElementById("formEstudiante");
+    const formActividad = document.getElementById("formActividad");
+    const infoSemillero = document.getElementById("infoSemillero");
 
-    const grupos = {
-        comba: {
-            nombre: "COMBA I+D",
-            descripcion: "Investigación en computación y matemática aplicada.",
-            director: "Dr. Juan Pérez"
-        },
-        gieiam: {
-            nombre: "GIEIAM",
-            descripcion: "Investigación en ingeniería aplicada y modelado.",
-            director: "Dra. Ana López"
-        }
+    let semilleros = JSON.parse(localStorage.getItem("semilleros")) || {
+        "INFORMA": { docentes: [], estudiantes: [], actividades: [] },
+        "COMBA": { docentes: [], estudiantes: [], actividades: [] }
     };
 
-    grupoSelect.addEventListener("change", function () {
-        const seleccion = grupoSelect.value;
-        if (seleccion) {
-            grupoNombre.textContent = grupos[seleccion].nombre;
-            grupoDescripcion.textContent = grupos[seleccion].descripcion;
-            grupoDirector.textContent = grupos[seleccion].director;
-            grupoInfo.classList.remove("d-none");
-        } else {
-            grupoInfo.classList.add("d-none");
-        }
-    });
+    function guardarDatos() {
+        localStorage.setItem("semilleros", JSON.stringify(semilleros));
+    }
 
-    // Registrar docente
-    document.getElementById("formDocente").addEventListener("submit", function (event) {
+    formDocente.addEventListener("submit", function (event) {
         event.preventDefault();
-        alert("Docente registrado con éxito");
-        this.reset();
+        const semillero = selectSemillero.value;
+        const docente = {
+            nombre: document.getElementById("nombreDocente").value,
+            formacion: document.getElementById("formacionDocente").value,
+            horario: document.getElementById("horarioDocente").value,
+            objetivo: document.getElementById("objetivoDocente").value
+        };
+        semilleros[semillero].docentes = [docente]; 
+        guardarDatos();
+        formDocente.reset();
+        actualizarVista();
     });
 
-    // Vincular estudiante a semillero
-    document.getElementById("formEstudiante").addEventListener("submit", function (event) {
+    formEstudiante.addEventListener("submit", function (event) {
         event.preventDefault();
-        alert("Estudiante vinculado al semillero con éxito");
-        this.reset();
+        const semillero = selectSemillero.value;
+        const estudiante = {
+            nombre: document.getElementById("nombreEstudiante").value,
+            codigo: document.getElementById("codigoEstudiante").value,
+            carrera: document.getElementById("carreraEstudiante").value
+        };
+        semilleros[semillero].estudiantes.push(estudiante);
+        guardarDatos();
+        formEstudiante.reset();
+        actualizarVista();
     });
 
-    // Agregar actividad
-    document.getElementById("formActividad").addEventListener("submit", function (event) {
-        event.preventDefault();
-        const actividadNombre = document.getElementById("actividadNombre").value;
-        const actividadFecha = document.getElementById("actividadFecha").value;
-        const actividadCupo = document.getElementById("actividadCupo").value;
-        const actividadResumen = document.getElementById("actividadResumen").value;
+    function actualizarVista() {
+        const semillero = selectSemillero.value;
+        infoSemillero.innerHTML = `<h2>${semillero}</h2>`;
+    }
 
-        const nuevaActividad = document.createElement("li");
-        nuevaActividad.classList.add("list-group-item");
-        nuevaActividad.textContent = `${actividadNombre} - ${actividadFecha} (Cupo: ${actividadCupo})`;
-
-        document.getElementById("listaActividades").appendChild(nuevaActividad);
-        this.reset();
-    });
+    actualizarVista();
 });
